@@ -73,6 +73,12 @@ README.md
 
 See [CHANGELOG.md](CHANGELOG.md).
 
+## Support
+
+- If you want to support the project, starring the repository helps.
+- If you want to support it directly, PayPal is available here:
+  `https://paypal.me/dzintars999`
+
 ## License
 
 Apache License 2.0. See `LICENSE` and `NOTICE`.
