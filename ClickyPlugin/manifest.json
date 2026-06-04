@@ -1,0 +1,18 @@
+{
+  "id": "com.avixity.clicky",
+  "name": "Clicky",
+  "displayName": "Clicky",
+  "author": "AVIXITY",
+  "version": "1.0.0",
+  "description": "System-wide haptic feedback on mouse clicks for haptics-capable Logitech devices.",
+  "category": "Utility",
+  "entryPoint": "Clicky.Plugin.HapticsPlugin",
+  "platforms": [
+    "windows"
+  ],
+  "actions": [],
+  "permissions": [
+    "background",
+    "input-monitoring"
+  ]
+}

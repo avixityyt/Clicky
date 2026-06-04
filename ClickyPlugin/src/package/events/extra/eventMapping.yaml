@@ -1,0 +1,181 @@
+haptics:
+    leftClickSharpStateChange:
+        DEFAULT: sharp_state_change
+        MX Master 4: sharp_state_change
+    leftClickDampStateChange:
+        DEFAULT: damp_state_change
+        MX Master 4: damp_state_change
+    leftClickSharpCollision:
+        DEFAULT: sharp_collision
+        MX Master 4: sharp_collision
+    leftClickDampCollision:
+        DEFAULT: damp_collision
+        MX Master 4: damp_collision
+    leftClickSubtleCollision:
+        DEFAULT: subtle_collision
+        MX Master 4: subtle_collision
+    leftClickHappyAlert:
+        DEFAULT: happy_alert
+        MX Master 4: happy_alert
+    leftClickAngryAlert:
+        DEFAULT: angry_alert
+        MX Master 4: angry_alert
+    leftClickCompleted:
+        DEFAULT: completed
+        MX Master 4: completed
+    leftClickSquare:
+        DEFAULT: square
+        MX Master 4: square
+    leftClickWave:
+        DEFAULT: wave
+        MX Master 4: wave
+    leftClickFirework:
+        DEFAULT: firework
+        MX Master 4: firework
+    leftClickMad:
+        DEFAULT: mad
+        MX Master 4: mad
+    leftClickKnock:
+        DEFAULT: knock
+        MX Master 4: knock
+    leftClickJingle:
+        DEFAULT: jingle
+        MX Master 4: jingle
+    leftClickRinging:
+        DEFAULT: ringing
+        MX Master 4: ringing
+    rightClickSharpStateChange:
+        DEFAULT: sharp_state_change
+        MX Master 4: sharp_state_change
+    rightClickDampStateChange:
+        DEFAULT: damp_state_change
+        MX Master 4: damp_state_change
+    rightClickSharpCollision:
+        DEFAULT: sharp_collision
+        MX Master 4: sharp_collision
+    rightClickDampCollision:
+        DEFAULT: damp_collision
+        MX Master 4: damp_collision
+    rightClickSubtleCollision:
+        DEFAULT: subtle_collision
+        MX Master 4: subtle_collision
+    rightClickHappyAlert:
+        DEFAULT: happy_alert
+        MX Master 4: happy_alert
+    rightClickAngryAlert:
+        DEFAULT: angry_alert
+        MX Master 4: angry_alert
+    rightClickCompleted:
+        DEFAULT: completed
+        MX Master 4: completed
+    rightClickSquare:
+        DEFAULT: square
+        MX Master 4: square
+    rightClickWave:
+        DEFAULT: wave
+        MX Master 4: wave
+    rightClickFirework:
+        DEFAULT: firework
+        MX Master 4: firework
+    rightClickMad:
+        DEFAULT: mad
+        MX Master 4: mad
+    rightClickKnock:
+        DEFAULT: knock
+        MX Master 4: knock
+    rightClickJingle:
+        DEFAULT: jingle
+        MX Master 4: jingle
+    rightClickRinging:
+        DEFAULT: ringing
+        MX Master 4: ringing
+    middleClickSharpStateChange:
+        DEFAULT: sharp_state_change
+        MX Master 4: sharp_state_change
+    middleClickDampStateChange:
+        DEFAULT: damp_state_change
+        MX Master 4: damp_state_change
+    middleClickSharpCollision:
+        DEFAULT: sharp_collision
+        MX Master 4: sharp_collision
+    middleClickDampCollision:
+        DEFAULT: damp_collision
+        MX Master 4: damp_collision
+    middleClickSubtleCollision:
+        DEFAULT: subtle_collision
+        MX Master 4: subtle_collision
+    middleClickHappyAlert:
+        DEFAULT: happy_alert
+        MX Master 4: happy_alert
+    middleClickAngryAlert:
+        DEFAULT: angry_alert
+        MX Master 4: angry_alert
+    middleClickCompleted:
+        DEFAULT: completed
+        MX Master 4: completed
+    middleClickSquare:
+        DEFAULT: square
+        MX Master 4: square
+    middleClickWave:
+        DEFAULT: wave
+        MX Master 4: wave
+    middleClickFirework:
+        DEFAULT: firework
+        MX Master 4: firework
+    middleClickMad:
+        DEFAULT: mad
+        MX Master 4: mad
+    middleClickKnock:
+        DEFAULT: knock
+        MX Master 4: knock
+    middleClickJingle:
+        DEFAULT: jingle
+        MX Master 4: jingle
+    middleClickRinging:
+        DEFAULT: ringing
+        MX Master 4: ringing
+    previewSharpStateChange:
+        DEFAULT: sharp_state_change
+        MX Master 4: sharp_state_change
+    previewDampStateChange:
+        DEFAULT: damp_state_change
+        MX Master 4: damp_state_change
+    previewSharpCollision:
+        DEFAULT: sharp_collision
+        MX Master 4: sharp_collision
+    previewDampCollision:
+        DEFAULT: damp_collision
+        MX Master 4: damp_collision
+    previewSubtleCollision:
+        DEFAULT: subtle_collision
+        MX Master 4: subtle_collision
+    previewHappyAlert:
+        DEFAULT: happy_alert
+        MX Master 4: happy_alert
+    previewAngryAlert:
+        DEFAULT: angry_alert
+        MX Master 4: angry_alert
+    previewCompleted:
+        DEFAULT: completed
+        MX Master 4: completed
+    previewSquare:
+        DEFAULT: square
+        MX Master 4: square
+    previewWave:
+        DEFAULT: wave
+        MX Master 4: wave
+    previewFirework:
+        DEFAULT: firework
+        MX Master 4: firework
+    previewMad:
+        DEFAULT: mad
+        MX Master 4: mad
+    previewKnock:
+        DEFAULT: knock
+        MX Master 4: knock
+    previewJingle:
+        DEFAULT: jingle
+        MX Master 4: jingle
+    previewRinging:
+        DEFAULT: ringing
+        MX Master 4: ringing

@@ -1,0 +1,184 @@
+displayName: Clicky
+description: Haptic events generated from global mouse clicks and settings previews.
+
+events:
+    - name: leftClickSharpStateChange
+      displayName: Left Click Sharp State Change
+      description: Triggered when left click uses the sharp state change feel.
+    - name: leftClickDampStateChange
+      displayName: Left Click Damp State Change
+      description: Triggered when left click uses the damp state change feel.
+    - name: leftClickSharpCollision
+      displayName: Left Click Sharp Collision
+      description: Triggered when left click uses the sharp collision feel.
+    - name: leftClickDampCollision
+      displayName: Left Click Damp Collision
+      description: Triggered when left click uses the damp collision feel.
+    - name: leftClickSubtleCollision
+      displayName: Left Click Subtle Collision
+      description: Triggered when left click uses the subtle collision feel.
+    - name: leftClickHappyAlert
+      displayName: Left Click Happy Alert
+      description: Triggered when left click uses the happy alert feel.
+    - name: leftClickAngryAlert
+      displayName: Left Click Angry Alert
+      description: Triggered when left click uses the angry alert feel.
+    - name: leftClickCompleted
+      displayName: Left Click Completed
+      description: Triggered when left click uses the completed feel.
+    - name: leftClickSquare
+      displayName: Left Click Square
+      description: Triggered when left click uses the square feel.
+    - name: leftClickWave
+      displayName: Left Click Wave
+      description: Triggered when left click uses the wave feel.
+    - name: leftClickFirework
+      displayName: Left Click Firework
+      description: Triggered when left click uses the firework feel.
+    - name: leftClickMad
+      displayName: Left Click Mad
+      description: Triggered when left click uses the mad feel.
+    - name: leftClickKnock
+      displayName: Left Click Knock
+      description: Triggered when left click uses the knock feel.
+    - name: leftClickJingle
+      displayName: Left Click Jingle
+      description: Triggered when left click uses the jingle feel.
+    - name: leftClickRinging
+      displayName: Left Click Ringing
+      description: Triggered when left click uses the ringing feel.
+    - name: rightClickSharpStateChange
+      displayName: Right Click Sharp State Change
+      description: Triggered when right click uses the sharp state change feel.
+    - name: rightClickDampStateChange
+      displayName: Right Click Damp State Change
+      description: Triggered when right click uses the damp state change feel.
+    - name: rightClickSharpCollision
+      displayName: Right Click Sharp Collision
+      description: Triggered when right click uses the sharp collision feel.
+    - name: rightClickDampCollision
+      displayName: Right Click Damp Collision
+      description: Triggered when right click uses the damp collision feel.
+    - name: rightClickSubtleCollision
+      displayName: Right Click Subtle Collision
+      description: Triggered when right click uses the subtle collision feel.
+    - name: rightClickHappyAlert
+      displayName: Right Click Happy Alert
+      description: Triggered when right click uses the happy alert feel.
+    - name: rightClickAngryAlert
+      displayName: Right Click Angry Alert
+      description: Triggered when right click uses the angry alert feel.
+    - name: rightClickCompleted
+      displayName: Right Click Completed
+      description: Triggered when right click uses the completed feel.
+    - name: rightClickSquare
+      displayName: Right Click Square
+      description: Triggered when right click uses the square feel.
+    - name: rightClickWave
+      displayName: Right Click Wave
+      description: Triggered when right click uses the wave feel.
+    - name: rightClickFirework
+      displayName: Right Click Firework
+      description: Triggered when right click uses the firework feel.
+    - name: rightClickMad
+      displayName: Right Click Mad
+      description: Triggered when right click uses the mad feel.
+    - name: rightClickKnock
+      displayName: Right Click Knock
+      description: Triggered when right click uses the knock feel.
+    - name: rightClickJingle
+      displayName: Right Click Jingle
+      description: Triggered when right click uses the jingle feel.
+    - name: rightClickRinging
+      displayName: Right Click Ringing
+      description: Triggered when right click uses the ringing feel.
+    - name: middleClickSharpStateChange
+      displayName: Middle Click Sharp State Change
+      description: Triggered when middle click uses the sharp state change feel.
+    - name: middleClickDampStateChange
+      displayName: Middle Click Damp State Change
+      description: Triggered when middle click uses the damp state change feel.
+    - name: middleClickSharpCollision
+      displayName: Middle Click Sharp Collision
+      description: Triggered when middle click uses the sharp collision feel.
+    - name: middleClickDampCollision
+      displayName: Middle Click Damp Collision
+      description: Triggered when middle click uses the damp collision feel.
+    - name: middleClickSubtleCollision
+      displayName: Middle Click Subtle Collision
+      description: Triggered when middle click uses the subtle collision feel.
+    - name: middleClickHappyAlert
+      displayName: Middle Click Happy Alert
+      description: Triggered when middle click uses the happy alert feel.
+    - name: middleClickAngryAlert
+      displayName: Middle Click Angry Alert
+      description: Triggered when middle click uses the angry alert feel.
+    - name: middleClickCompleted
+      displayName: Middle Click Completed
+      description: Triggered when middle click uses the completed feel.
+    - name: middleClickSquare
+      displayName: Middle Click Square
+      description: Triggered when middle click uses the square feel.
+    - name: middleClickWave
+      displayName: Middle Click Wave
+      description: Triggered when middle click uses the wave feel.
+    - name: middleClickFirework
+      displayName: Middle Click Firework
+      description: Triggered when middle click uses the firework feel.
+    - name: middleClickMad
+      displayName: Middle Click Mad
+      description: Triggered when middle click uses the mad feel.
+    - name: middleClickKnock
+      displayName: Middle Click Knock
+      description: Triggered when middle click uses the knock feel.
+    - name: middleClickJingle
+      displayName: Middle Click Jingle
+      description: Triggered when middle click uses the jingle feel.
+    - name: middleClickRinging
+      displayName: Middle Click Ringing
+      description: Triggered when middle click uses the ringing feel.
+    - name: previewSharpStateChange
+      displayName: Preview Sharp State Change
+      description: Triggered when previewing the sharp state change feel.
+    - name: previewDampStateChange
+      displayName: Preview Damp State Change
+      description: Triggered when previewing the damp state change feel.
+    - name: previewSharpCollision
+      displayName: Preview Sharp Collision
+      description: Triggered when previewing the sharp collision feel.
+    - name: previewDampCollision
+      displayName: Preview Damp Collision
+      description: Triggered when previewing the damp collision feel.
+    - name: previewSubtleCollision
+      displayName: Preview Subtle Collision
+      description: Triggered when previewing the subtle collision feel.
+    - name: previewHappyAlert
+      displayName: Preview Happy Alert
+      description: Triggered when previewing the happy alert feel.
+    - name: previewAngryAlert
+      displayName: Preview Angry Alert
+      description: Triggered when previewing the angry alert feel.
+    - name: previewCompleted
+      displayName: Preview Completed
+      description: Triggered when previewing the completed feel.
+    - name: previewSquare
+      displayName: Preview Square
+      description: Triggered when previewing the square feel.
+    - name: previewWave
+      displayName: Preview Wave
+      description: Triggered when previewing the wave feel.
+    - name: previewFirework
+      displayName: Preview Firework
+      description: Triggered when previewing the firework feel.
+    - name: previewMad
+      displayName: Preview Mad
+      description: Triggered when previewing the mad feel.
+    - name: previewKnock
+      displayName: Preview Knock
+      description: Triggered when previewing the knock feel.
+    - name: previewJingle
+      displayName: Preview Jingle
+      description: Triggered when previewing the jingle feel.
+    - name: previewRinging
+      displayName: Preview Ringing
+      description: Triggered when previewing the ringing feel.

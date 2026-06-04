@@ -1,0 +1,38 @@
+# ==================================================================================================
+# GENERAL SETTINGS
+# ==================================================================================================
+
+type: plugin4
+name: Clicky
+displayName: Clicky
+description: System-wide haptic feedback on mouse clicks for haptics-capable Logitech devices.
+pluginFileName: ClickyPlugin.dll
+version: 1.0.0
+author: AVIXITY
+copyright: Copyright (c) 2026 AVIXITY
+
+
+# ==================================================================================================
+# PLUGIN PROPERTIES
+# ==================================================================================================
+
+pluginFolderWin: bin
+
+supportedDevices:
+    - LoupedeckCtFamily
+    - LoupedeckExtendedFamily
+
+pluginCapabilities:
+    - HasHapticMapping
+
+minimumLoupedeckVersion: 6.0
+
+
+# ==================================================================================================
+# LOUPEDECK MARKETPLACE SETTINGS
+# ==================================================================================================
+
+license: Apache-2.0
+licenseUrl: https://www.apache.org/licenses/LICENSE-2.0
+homePageUrl: https://clicky.dzintarsit.lv/
+supportPageUrl: https://clicky.dzintarsit.lv/

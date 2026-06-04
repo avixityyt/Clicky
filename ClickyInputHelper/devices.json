@@ -1,0 +1,38 @@
+{
+  "supportedDevices": [
+    {
+      "name": "mx_master_4",
+      "label": "MX Master 4",
+      "allowByVidPidFallback": true,
+      "rules": [
+        {
+          "connection": "bluetooth",
+          "vendorId": "046D",
+          "productId": "B042",
+          "pathContains": [
+            "00001812",
+            "dev_vid&02046d_pid&b042"
+          ]
+        },
+        {
+          "connection": "receiver",
+          "vendorId": "046D",
+          "productId": "B042",
+          "pathContains": [
+            "vid_046d",
+            "pid_b042"
+          ]
+        },
+        {
+          "connection": "receiver",
+          "vendorId": "046D",
+          "productId": "C548",
+          "pathContains": [
+            "vid_046d",
+            "pid_c548"
+          ]
+        }
+      ]
+    }
+  ]
+}
