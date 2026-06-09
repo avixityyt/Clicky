@@ -7,7 +7,7 @@ name: Clicky
 displayName: Clicky
 description: System-wide haptic feedback on mouse clicks for haptics-capable Logitech devices.
 pluginFileName: ClickyPlugin.dll
-version: 1.0.1
+version: 1.0.3
 author: AVIXITY
 copyright: Copyright (c) 2026 AVIXITY
 

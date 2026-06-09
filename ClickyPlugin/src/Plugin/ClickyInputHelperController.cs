@@ -55,7 +55,6 @@ internal sealed class ClickyInputHelperController : IDisposable
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(bridgeBaseUrl);
 
-        // The helper reads this bridge file on startup and after bridge port changes.
         WriteBridgeFile(bridgeBaseUrl);
 
         var helperExe = ResolveHelperExecutablePath();
@@ -69,7 +68,6 @@ internal sealed class ClickyInputHelperController : IDisposable
 
         if (IsHelperResponsive())
         {
-            // A healthy helper can be reused across plugin reloads.
             Logger.Info("Reusing existing Clicky input helper instance.");
             return;
         }
@@ -97,7 +95,6 @@ internal sealed class ClickyInputHelperController : IDisposable
 
     private static string ResolveHelperExecutablePath()
     {
-        // Probe the installed/plugin-link layouts we use during development and packaged installs.
         foreach (var pluginDirectory in EnumerateCandidatePluginDirectories())
         {
             var helperExecutablePath = Path.Combine(pluginDirectory, "tools", "ClickyInputHelper", "ClickyInputHelper.exe");
@@ -181,7 +178,6 @@ internal sealed class ClickyInputHelperController : IDisposable
             return;
         }
 
-        // Older Startup-folder launchers were replaced by a normal HKCU Run entry.
         if (File.Exists(LegacyStartupCommandFilePath))
         {
             File.Delete(LegacyStartupCommandFilePath);
@@ -221,7 +217,6 @@ internal sealed class ClickyInputHelperController : IDisposable
 
     private static void WaitForHeartbeat()
     {
-        // The heartbeat is the quick sanity check that the helper survived startup.
         var timeoutAt = DateTime.UtcNow + TimeSpan.FromSeconds(3);
         while (DateTime.UtcNow < timeoutAt)
         {

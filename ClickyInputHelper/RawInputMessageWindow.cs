@@ -42,7 +42,7 @@ internal sealed class RawInputMessageWindow : NativeWindow, IDisposable
             Y = -32000,
             Width = 1,
             Height = 1,
-            Style = unchecked((int)0x80000000),
+            Style = unchecked((int)0x80000000), // WS_POPUP
         });
 
         RegisterForRawMouseInput(this.Handle);

@@ -61,7 +61,6 @@ public sealed class GlobalMouseHookService : IDisposable
                 IsBackground = true,
                 Name = "Clicky Global Mouse Hook",
             };
-            // Run the low-level hook on its own message thread.
             this._hookThread.Start();
         }
 
@@ -200,7 +199,6 @@ public sealed class GlobalMouseHookService : IDisposable
             if (handlers != null)
             {
                 var args = new GlobalMouseClickEventArgs(button);
-                // Hand the event off quickly so the hook callback stays lightweight.
                 ThreadPool.QueueUserWorkItem(
                     static state =>
                     {

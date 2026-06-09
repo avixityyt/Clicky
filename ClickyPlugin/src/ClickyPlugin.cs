@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 public sealed class ClickyPlugin : Plugin
 {
+    private ClickyRawInputService? _rawInput;
     private GlobalMouseHookService? _mouseHook;
     private HapticClickCommand? _hapticCommand;
     private ClickySettingsService? _settingsService;
     private ClickySettingsServer? _settingsServer;
     private ClickyInputEventStore? _inputEventStore;
     private ClickyAllowedInputAuthorizer? _inputAuthorizer;
-    private ClickyInputHelperController? _inputHelper;
     private ClickySelectedPointerDeviceService? _selectedPointerDeviceService;
     private DateTimeOffset _loadedAtUtc;
 
@@ -33,16 +33,16 @@ public sealed class ClickyPlugin : Plugin
 
         try
         {
-            // Wire up the bridge, helper, and haptic pipeline before mouse input starts flowing.
+            // Wire up settings, device binding, and haptic output before input starts flowing.
             this._loadedAtUtc = DateTimeOffset.UtcNow;
             this._settingsService = new ClickySettingsService(this);
             this._inputEventStore = new ClickyInputEventStore();
             this._selectedPointerDeviceService = new ClickySelectedPointerDeviceService(this);
-            this._inputAuthorizer = new ClickyAllowedInputAuthorizer(
-                this._selectedPointerDeviceService,
-                ClickyInputHelperController.IsHelperResponsive);
+            this._inputAuthorizer = new ClickyAllowedInputAuthorizer(this._selectedPointerDeviceService);
             this._hapticCommand = new HapticClickCommand(this.PluginEvents);
             this._hapticCommand.RegisterEvents();
+
+            // Bring the local bridge up before the hosted settings page tries to use it.
             this._settingsServer = new ClickySettingsServer(
                 this._settingsService,
                 waveform => this._hapticCommand?.Preview(waveform),
@@ -50,33 +50,40 @@ public sealed class ClickyPlugin : Plugin
                 this._inputEventStore,
                 this._selectedPointerDeviceService,
                 this.OnInputEventReceived,
-                ClickyInputHelperController.IsHelperResponsive);
+                () => this._rawInput?.IsActive ?? false);
             this._settingsServer.Start();
 
-            this._inputHelper = new ClickyInputHelperController();
+            this._rawInput = new ClickyRawInputService();
             try
             {
-                // The helper gives us per-device input data when it is available.
-                this._inputHelper.Start(this._settingsServer.RootUrl.TrimEnd('/'));
+                // Device-aware raw input is the preferred trigger path for click haptics.
+                this._rawInput.InputEventReceived += this.OnRawInputReceived;
+                this._rawInput.Start();
             }
             catch (Exception ex)
             {
-                Logger.Warning(ex, "Clicky input helper did not start. Falling back to the global mouse hook only.");
+                Logger.Warning(ex, "Clicky raw input did not start. Falling back to the global mouse hook.");
+                this._rawInput.InputEventReceived -= this.OnRawInputReceived;
+                this._rawInput.Dispose();
+                this._rawInput = null;
             }
 
-            this._mouseHook = new GlobalMouseHookService();
-            this._mouseHook.MouseClicked += this.OnGlobalMouseClicked;
-            try
+            if (this._rawInput == null)
             {
-                // The global hook is still the main trigger path for click-driven haptics.
-                this._mouseHook.Start();
-            }
-            catch (Exception ex)
-            {
-                Logger.Warning(ex, "Mouse input backend failed to start. Clicky settings will stay available, but click-triggered haptics are disabled.");
-                this._mouseHook.MouseClicked -= this.OnGlobalMouseClicked;
-                this._mouseHook.Dispose();
-                this._mouseHook = null;
+                this._mouseHook = new GlobalMouseHookService();
+                this._mouseHook.MouseClicked += this.OnGlobalMouseClicked;
+                try
+                {
+                    // The low-level hook is only a fallback when raw input is unavailable.
+                    this._mouseHook.Start();
+                }
+                catch (Exception ex)
+                {
+                    Logger.Warning(ex, "Mouse input backend failed to start. Clicky settings will stay available, but click-triggered haptics are disabled.");
+                    this._mouseHook.MouseClicked -= this.OnGlobalMouseClicked;
+                    this._mouseHook.Dispose();
+                    this._mouseHook = null;
+                }
             }
 
             Logger.Info("Clicky plugin loaded.");
@@ -107,9 +114,38 @@ public sealed class ClickyPlugin : Plugin
         this._settingsServer.OpenBrowser();
     }
 
+    private void OnRawInputReceived(object? sender, ClickyInputEventRecord record)
+    {
+        _ = Task.Run(() =>
+        {
+            try
+            {
+                if (this._settingsService == null || this._inputEventStore == null)
+                {
+                    return;
+                }
+
+                var processed = this._inputAuthorizer?.Process(record) ?? record;
+                this._inputEventStore.Record(processed);
+
+                if (!processed.AllowedForHaptics || !TryParseButton(processed.Button, out var button))
+                {
+                    return;
+                }
+
+                Logger.Verbose($"Raw input click detected from '{processed.DeviceLabel}' ({processed.Button}).");
+                this._hapticCommand?.Trigger(button, this._settingsService.GetSnapshot());
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "Unhandled exception while processing raw input.");
+            }
+        });
+    }
+
     private void OnGlobalMouseClicked(object? sender, GlobalMouseClickEventArgs e)
     {
-        _ = Task.Run(async () =>
+        _ = Task.Run(() =>
         {
             try
             {
@@ -117,14 +153,6 @@ public sealed class ClickyPlugin : Plugin
 
                 if (this._settingsService == null)
                 {
-                    return;
-                }
-
-                // Give the helper a brief window to post the matching device event first.
-                await Task.Delay(90).ConfigureAwait(false);
-                if (this._inputAuthorizer != null && !this._inputAuthorizer.ShouldTrigger(e.Button))
-                {
-                    Logger.Verbose($"Skipping haptic trigger for {e.Button} because no matching helper event was authorized.");
                     return;
                 }
 
@@ -140,6 +168,13 @@ public sealed class ClickyPlugin : Plugin
     private void Cleanup()
     {
         // Tear down input sources before the bridge/services disappear underneath them.
+        if (this._rawInput != null)
+        {
+            this._rawInput.InputEventReceived -= this.OnRawInputReceived;
+            this._rawInput.Dispose();
+            this._rawInput = null;
+        }
+
         if (this._mouseHook != null)
         {
             this._mouseHook.MouseClicked -= this.OnGlobalMouseClicked;
@@ -149,8 +184,6 @@ public sealed class ClickyPlugin : Plugin
 
         this._settingsServer?.Dispose();
         this._settingsServer = null;
-        this._inputHelper?.Dispose();
-        this._inputHelper = null;
         this._selectedPointerDeviceService = null;
         this._inputAuthorizer = null;
         this._inputEventStore = null;
@@ -167,8 +200,9 @@ public sealed class ClickyPlugin : Plugin
     {
         var version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "unknown";
         var bridgeBaseUrl = this._settingsServer?.RootUrl.TrimEnd('/') ?? string.Empty;
-        var helperRunning = ClickyInputHelperController.IsHelperResponsive();
+        var rawInputActive = this._rawInput?.IsActive ?? false;
         var selectedDevice = this._selectedPointerDeviceService?.GetSnapshot();
+        var fallbackHookActive = this._mouseHook?.IsActive ?? false;
         return new ClickyDiagnosticsSnapshot
         {
             PluginVersion = version,
@@ -176,17 +210,38 @@ public sealed class ClickyPlugin : Plugin
             HostedSettingsPage = "https://clicky.dzintarsit.lv/settings/",
             BridgeBaseUrl = bridgeBaseUrl,
             IsWindows = OperatingSystem.IsWindows(),
-            MouseHookActive = this._mouseHook?.IsActive ?? false,
-            InputHelperRunning = helperRunning,
+            MouseHookActive = rawInputActive || fallbackHookActive,
+            InputHelperRunning = rawInputActive,
             InputMode = selectedDevice != null
                 ? $"Selected device: {selectedDevice.DeviceLabel}"
-                : helperRunning
-                    ? "Helper-assisted MX detection"
-                    : "Global hook fallback",
-            LastInputEventUtc = this._inputEventStore?.CreateSnapshot(helperRunning).LastInputEventUtc,
+                : rawInputActive
+                    ? "In-plugin raw input"
+                    : fallbackHookActive
+                        ? "Global hook fallback"
+                        : "Inactive",
+            LastInputEventUtc = this._inputEventStore?.CreateSnapshot(rawInputActive).LastInputEventUtc,
             WaveformCount = HapticWaveformCatalog.All.Count,
             SupportedButtons = Enum.GetNames<GlobalMouseButton>().Select(name => name.ToLowerInvariant()).ToArray(),
             LoadedAtUtc = this._loadedAtUtc,
         };
+    }
+
+    private static bool TryParseButton(string buttonName, out GlobalMouseButton button)
+    {
+        switch ((buttonName ?? string.Empty).Trim().ToLowerInvariant())
+        {
+            case "left":
+                button = GlobalMouseButton.Left;
+                return true;
+            case "right":
+                button = GlobalMouseButton.Right;
+                return true;
+            case "middle":
+                button = GlobalMouseButton.Middle;
+                return true;
+            default:
+                button = default;
+                return false;
+        }
     }
 }

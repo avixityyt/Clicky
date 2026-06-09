@@ -22,7 +22,7 @@ internal sealed class ClickyInputEventRecord
 
     public bool AllowedForHaptics { get; set; }
 
-    public string Source { get; set; } = "helper";
+    public string Source { get; set; } = "plugin";
 
     public ClickyInputEventRecord Clone() => new()
     {

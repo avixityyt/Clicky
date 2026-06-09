@@ -22,6 +22,8 @@ internal sealed class ClickySettingsServer : IDisposable
         "http://clicky.dzintarsit.lv:65439",
         "https://clicky.dzintarsit.lv:65439",
         "https://dzintarsit.lv",
+        "http://node.dzintarsit.lv:65439",
+        "https://node.dzintarsit.lv:65439",
     };
 
     private static readonly JsonSerializerOptions JsonOptions = new()
@@ -77,18 +79,19 @@ internal sealed class ClickySettingsServer : IDisposable
             return;
         }
 
-        // Prefer the stable localhost port, but fall back cleanly if it is already occupied.
         var port = FindPort();
         this._rootUrl = $"http://127.0.0.1:{port}/";
         this._listener.Prefixes.Add(this._rootUrl);
         this._listener.Start();
+
+        // Start the local bridge before the hosted page tries to call back into it.
         this._serverTask = Task.Run(() => this.RunAsync(this._cancellationTokenSource.Token));
         Logger.Info($"Settings server started at {this._rootUrl}");
     }
 
     public void OpenBrowser()
     {
-        // Pass the active bridge base in the hash so the hosted page can attach to the right plugin instance.
+        // The hosted page stays public, but settings still flow through localhost.
         var bridgeBase = Uri.EscapeDataString(this.RootUrl.TrimEnd('/'));
         Process.Start(new ProcessStartInfo
         {
@@ -166,7 +169,6 @@ internal sealed class ClickySettingsServer : IDisposable
     {
         try
         {
-            // Keep the local API surface small: settings, previews, diagnostics, and device binding.
             var path = context.Request.Url?.AbsolutePath ?? "/";
             var hasOrigin = !string.IsNullOrWhiteSpace(context.Request.Headers["Origin"]);
             var isAllowedOrigin = ApplyBrowserAccessHeaders(context.Request, context.Response);

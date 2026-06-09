@@ -215,7 +215,8 @@ internal sealed class BridgeDiscoveryServer : IDisposable
         }
 
         if (string.Equals(uri.Host, "clicky.dzintarsit.lv", StringComparison.OrdinalIgnoreCase)
-            || string.Equals(uri.Host, "dzintarsit.lv", StringComparison.OrdinalIgnoreCase))
+            || string.Equals(uri.Host, "dzintarsit.lv", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(uri.Host, "node.dzintarsit.lv", StringComparison.OrdinalIgnoreCase))
         {
             return true;
         }

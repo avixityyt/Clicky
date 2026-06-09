@@ -20,7 +20,7 @@ internal sealed class HapticClickCommand
             return;
         }
 
-        // Every selectable waveform gets a button event and a preview event.
+        // Register the whole waveform catalog once so click dispatch later stays simple.
         foreach (var waveform in HapticWaveformCatalog.All)
         {
             this.RegisterButtonEvent("leftClick", "Left Click", waveform);
@@ -42,7 +42,7 @@ internal sealed class HapticClickCommand
             return;
         }
 
-        // Build the exact event name from the button plus the saved waveform selection.
+        // Each button can point at its own waveform, or be turned off completely.
         var eventName = button switch
         {
             GlobalMouseButton.Left when settings.LeftEnabled => BuildButtonEventName("leftClick", settings.LeftWaveform),

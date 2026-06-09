@@ -5,9 +5,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>Loupedeck.ClickyPlugin</RootNamespace>
-    <Version>1.0.1</Version>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
-    <FileVersion>1.0.1.0</FileVersion>
+    <Version>1.0.3</Version>
+    <AssemblyVersion>1.0.3.0</AssemblyVersion>
+    <FileVersion>1.0.3.0</FileVersion>
 
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -23,7 +23,6 @@
 
     <BaseOutputPath>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\bin\'))</BaseOutputPath>
     <OutputPath>$(BaseOutputPath)$(Configuration)\bin\</OutputPath>
-    <InputHelperPublishDir>$(MSBuildThisFileDirectory)..\..\ClickyInputHelper\bin\$(Configuration)\publish\win-x64\</InputHelperPublishDir>
 
     <PluginShortName>Clicky</PluginShortName>
   </PropertyGroup>
@@ -49,26 +48,12 @@
     <Message Text="Package files copied to $(OutputPath)..\" Importance="High" />
   </Target>
 
-  <Target Name="StopInputHelperForCopy" BeforeTargets="CopyInputHelper" Condition="$(OS) == 'Windows_NT'">
-    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;Get-Process ClickyInputHelper -ErrorAction SilentlyContinue | Stop-Process -Force; exit 0&quot;" ContinueOnError="true" />
-  </Target>
-
-  <Target Name="PublishInputHelper" BeforeTargets="CopyInputHelper">
-    <Message Text="Publishing Clicky input helper as self-contained win-x64..." Importance="High" />
-    <Exec Command="dotnet publish &quot;$(MSBuildThisFileDirectory)..\..\ClickyInputHelper\ClickyInputHelper.csproj&quot; -c $(Configuration) -r win-x64 --self-contained true -p:SatelliteResourceLanguages=en -o &quot;$(InputHelperPublishDir)&quot;" />
-  </Target>
-
-  <Target Name="RemoveLegacyInputHelperOutput" BeforeTargets="CopyInputHelper">
+  <Target Name="RemoveLegacyInputHelperOutput" BeforeTargets="PostBuild">
+    <Exec
+      Condition="$(OS) == 'Windows_NT'"
+      Command="powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;Get-Process ClickyInputHelper -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue; Remove-Item -LiteralPath '$(OutputPath)..\tools\ClickyInputHelper' -Recurse -Force -ErrorAction SilentlyContinue; exit 0&quot;"
+      ContinueOnError="true" />
     <RemoveDir Directories="$(OutputPath)..\tools\ClickyInputHelper\" />
-  </Target>
-
-  <Target Name="CopyInputHelper" BeforeTargets="PostBuild">
-    <Message Text="Copying Clicky input helper..." Importance="High" />
-    <ItemGroup>
-      <InputHelperFiles Include="$(InputHelperPublishDir)**\*" />
-    </ItemGroup>
-    <Copy SourceFiles="@(InputHelperFiles)" DestinationFiles="@(InputHelperFiles->'$(OutputPath)..\tools\ClickyInputHelper\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
-    <Message Text="Clicky input helper copied to $(OutputPath)..\tools\ClickyInputHelper\" Importance="High" />
   </Target>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

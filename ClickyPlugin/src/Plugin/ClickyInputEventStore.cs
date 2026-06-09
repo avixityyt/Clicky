@@ -19,7 +19,6 @@ internal sealed class ClickyInputEventStore
 
         lock (this._sync)
         {
-            // Keep the newest events first so the dev view and picker stay responsive.
             this._events.Insert(0, record);
             if (this._events.Count > MaxEvents)
             {
@@ -71,7 +70,6 @@ internal sealed class ClickyInputEventStore
 
     private static ClickyPointerDeviceCandidate[] BuildCandidates(IReadOnlyList<ClickyInputEventRecord> events, ClickySelectedPointerDevice? selectedDevice)
     {
-        // Collapse repeated events from the same pointer into a short list of recent candidates.
         return events
             .GroupBy(record => BuildCandidateKey(record), StringComparer.OrdinalIgnoreCase)
             .Select(group =>

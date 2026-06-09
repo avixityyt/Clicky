@@ -13,6 +13,10 @@ Homepage: https://clicky.dzintarsit.lv/
 - Logitech Options+
 - `PluginApi.dll` available through a local Logi Plugin Service install
 
+## Current Device Focus
+
+- MX Master 4
+
 ## Build
 
 From the solution:
@@ -27,7 +31,7 @@ Or from the plugin project directly:
 dotnet build .\ClickyPlugin\src\ClickyPlugin.csproj
 ```
 
-The plugin build publishes `ClickyInputHelper` and copies it into the packaged plugin output automatically.
+The current release package keeps mouse input handling inside the plugin, so the packaged `.lplug4` does not rely on a separate helper executable.
 
 ## Repository Layout
 
@@ -42,6 +46,8 @@ NOTICE
 README.md
 ```
 
+`ClickyInputHelper/` is kept in the repository for related input experiments and utilities, but the current public package is built from `ClickyPlugin/`.
+
 ## Troubleshooting
 
 ### The settings page does not connect
@@ -49,12 +55,6 @@ README.md
 - Open Clicky from Logitech Options+ first.
 - Check `http://127.0.0.1:65439/health` on the same machine.
 - Reload `https://clicky.dzintarsit.lv/settings/` after the plugin is open.
-
-### The input helper is not running
-
-- Reopen Logitech Options+ and then reopen the settings page.
-- Check the helper heartbeat file:
-  `C:\Users\<you>\AppData\Local\Logi\LogiPluginService\Temp\ClickyInputHelper.heartbeat`
 
 ### Haptics do not fire
 
@@ -77,7 +77,7 @@ See [CHANGELOG.md](CHANGELOG.md).
 
 - If you want to support the project, starring the repository helps.
 - If you want to support it directly, PayPal is available here:
-  `https://paypal.me/dzintars999`
+  https://paypal.me/dzintars999
 
 ## License
 
