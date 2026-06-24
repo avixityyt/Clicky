@@ -5,9 +5,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>Loupedeck.ClickyPlugin</RootNamespace>
-    <Version>1.0.3</Version>
-    <AssemblyVersion>1.0.3.0</AssemblyVersion>
-    <FileVersion>1.0.3.0</FileVersion>
+    <Version>1.0.4</Version>
+    <AssemblyVersion>1.0.4.0</AssemblyVersion>
+    <FileVersion>1.0.4.0</FileVersion>
 
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -30,6 +30,7 @@
   <ItemGroup>
     <Reference Include="PluginApi">
       <HintPath>$(PluginApiDir)PluginApi.dll</HintPath>
+      <Private>false</Private>
     </Reference>
   </ItemGroup>
 
@@ -54,6 +55,10 @@
       Command="powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;Get-Process ClickyInputHelper -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue; Remove-Item -LiteralPath '$(OutputPath)..\tools\ClickyInputHelper' -Recurse -Force -ErrorAction SilentlyContinue; exit 0&quot;"
       ContinueOnError="true" />
     <RemoveDir Directories="$(OutputPath)..\tools\ClickyInputHelper\" />
+  </Target>
+
+  <Target Name="RemoveHostRuntimeArtifacts" BeforeTargets="PostBuild">
+    <Delete Files="$(OutputPath)PluginApi.dll;$(OutputPath)PluginApi.xml" />
   </Target>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

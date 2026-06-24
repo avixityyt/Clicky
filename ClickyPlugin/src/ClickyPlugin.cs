@@ -213,7 +213,7 @@ public sealed class ClickyPlugin : Plugin
             MouseHookActive = rawInputActive || fallbackHookActive,
             InputHelperRunning = rawInputActive,
             InputMode = selectedDevice != null
-                ? $"Selected device: {selectedDevice.DeviceLabel}"
+                ? $"Selected device: {selectedDevice.DeviceLabel} ({ClickyBindingStrategies.Normalize(selectedDevice.BindingStrategy)})"
                 : rawInputActive
                     ? "In-plugin raw input"
                     : fallbackHookActive

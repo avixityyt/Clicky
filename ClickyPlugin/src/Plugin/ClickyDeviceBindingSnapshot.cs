@@ -15,6 +15,8 @@ internal sealed class ClickyDeviceBindingSnapshot
 
 internal sealed class ClickyPointerDeviceCandidate
 {
+    public string SourceKey { get; set; } = string.Empty;
+
     public string DeviceLabel { get; set; } = string.Empty;
 
     public string DevicePath { get; set; } = string.Empty;
@@ -27,11 +29,21 @@ internal sealed class ClickyPointerDeviceCandidate
 
     public bool IsMxMaster4 { get; set; }
 
+    public bool IsSharedReceiver { get; set; }
+
+    public bool IsLikelyAmbiguous { get; set; }
+
     public bool IsSelected { get; set; }
 
     public int SeenCount { get; set; }
 
     public string LastButton { get; set; } = string.Empty;
 
+    public DateTimeOffset FirstSeenUtc { get; set; }
+
     public DateTimeOffset LastSeenUtc { get; set; }
+
+    public string IdentityKind { get; set; } = string.Empty;
+
+    public string Warning { get; set; } = string.Empty;
 }

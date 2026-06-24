@@ -3,7 +3,7 @@
   "name": "Clicky",
   "displayName": "Clicky",
   "author": "AVIXITY",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "System-wide haptic feedback on mouse clicks for haptics-capable Logitech devices.",
   "category": "Utility",
   "entryPoint": "Clicky.Plugin.HapticsPlugin",

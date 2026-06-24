@@ -452,13 +452,17 @@ internal sealed class ClickyRawInputService : IDisposable
 
         if (!string.IsNullOrWhiteSpace(vendorId) || !string.IsNullOrWhiteSpace(productId))
         {
+            var isSharedLogitechReceiver = string.Equals(vendorId, "046D", StringComparison.OrdinalIgnoreCase)
+                && string.Equals(productId, "C548", StringComparison.OrdinalIgnoreCase);
             return new RawDeviceDescriptor
             {
                 DevicePath = devicePath,
-                DeviceLabel = $"External pointer ({vendorId}:{productId})",
+                DeviceLabel = isSharedLogitechReceiver
+                    ? "Logitech receiver pointer (shared)"
+                    : $"External pointer ({vendorId}:{productId})",
                 VendorId = vendorId,
                 ProductId = productId,
-                ConnectionType = "external",
+                ConnectionType = isSharedLogitechReceiver ? "receiver-shared" : "external",
                 IsMxMaster4 = false,
             };
         }

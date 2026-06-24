@@ -38,17 +38,6 @@ internal sealed class ClickySupportedPointerDevicesConfig
                                 "pid_b042",
                             ],
                         },
-                        new ClickySupportedPointerDeviceRule
-                        {
-                            Connection = "receiver",
-                            VendorId = "046D",
-                            ProductId = "C548",
-                            PathContains =
-                            [
-                                "vid_046d",
-                                "pid_c548",
-                            ],
-                        },
                     ],
                 },
             ],
